@@ -1,0 +1,32 @@
+- name: container module prereqs
+  hosts: localhost
+  tags: prereqs
+  gather_facts: false
+  tasks:
+  - ansible.builtin.pip:
+      name: requests
+
+- name: manage docker containers
+  hosts: localhost
+  tags: containers
+  gather_facts: false
+  module_defaults:
+    community.docker.docker_container:
+      state: absent
+      force_kill: true
+  tasks:
+  - community.docker.docker_container:
+      name: "c{{ item }}"
+      image: python:latest
+      # keep ctr running in bg
+      tty: true
+      interactive: true
+      auto_remove: true
+    name: looping containers
+    loop: "{{ range(1,9) }}"
+  - community.docker.docker_container:
+      name: sleeper
+      image: python
+      # another way to keep ctr running in bg
+      command: "sleep infinity"
+    name: sleeper container

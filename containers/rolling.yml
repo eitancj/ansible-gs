@@ -1,0 +1,14 @@
+- name: play1
+  hosts: all
+  serial:
+    # Run the play on a quarter of the hosts.
+    # Then on half of the original total number of hosts.
+    # The on the original total number of hosts, which will result in simply the remainder. 
+    - "25%"
+    - "50%"
+    - "100%"
+  tasks:
+    - name: copy file
+      command: sleep 1
+    - name: configure web app
+      command: sleep 1

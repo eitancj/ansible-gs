@@ -1,6 +1,0 @@
-# ansible -m copy -a "dest=hello content=world\n" localhost
-- name: copy module — hello world
-  hosts: localhost
-  tasks:
-    - copy: dest=hello content='world\n\n'
-    - command: aws ec2 describe-instance-status --include-all-instances --query "InstanceStatuses[*].[InstanceId,InstanceState.Name,InstanceStatus.Details[*].[Name,Status]]" --output yaml

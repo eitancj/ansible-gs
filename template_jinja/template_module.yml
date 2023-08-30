@@ -1,0 +1,13 @@
+- name: Play with the template module
+  hosts: all
+  vars:
+    my_server_port: 89
+  serial: 3
+  tasks:
+    # generate a server config file out of an existing Jinja2 template.
+    # place it under /etc on all inventory hosts
+    - ansible.builtin.template:
+        src: server.conf.j2
+        dest: /etc/server.conf
+      name: Generate server.conf
+        

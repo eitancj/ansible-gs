@@ -1,1 +1,5 @@
-ansible.cfg
+# Exclude
+.DS_Store
+
+# Exclude only top level ansible.cfg, not those in subdirs
+/ansible.cfg

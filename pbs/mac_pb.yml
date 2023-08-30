@@ -1,0 +1,13 @@
+- name: Accent Colour
+  hosts: 'all,!ubu1,localhost'
+  tasks:
+  - name: get os info
+    ansible.builtin.debug:
+      var: ansible_distribution
+  - name: blue accent colour
+    when: ansible_distribution == "MacOSX"
+    community.general.osx_defaults:
+      domain: NSGlobalDomain
+      key: AppleAccentColor
+      type: integer
+      value: 4

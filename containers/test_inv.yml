@@ -1,0 +1,5 @@
+- name: test dynamic docker inventory
+  hosts: all
+  tasks:
+    - ansible.builtin.ping:
+        

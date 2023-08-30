@@ -1,0 +1,20 @@
+- name: get basic ec2-instance info
+  hosts: localhost
+  tags: ec2
+  tasks:
+    - command: aws ec2 describe-instances --query "Reservations[*].Instances[*].[InstanceId,Platform,State.Name,PublicDnsName,PublicIpAddress]" --output table
+  gather_facts: false
+
+- name: start ec2 ubuntu instances
+  hosts: localhost
+  tags: start
+  tasks:
+    - command: aws ec2 start-instances --instance-id $(aws ec2 describe-instances --query "Reservations[*].Instances[*].InstanceId" --output text | tr "\t" " ")
+  gather_facts: false
+
+- name: stop ec2 ubuntu instances
+  hosts: localhost
+  tags: stop
+  tasks:
+    - command: aws ec2 stop-instances --instance-id $(aws ec2 describe-instances --query "Reservations[*].Instances[*].InstanceId" --output text | tr "\t" " ")
+  gather_facts: false

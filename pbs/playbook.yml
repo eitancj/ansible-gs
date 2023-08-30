@@ -1,0 +1,32 @@
+- name: hello world & show date
+  hosts: localhost
+  tags: always
+  tasks:
+    - copy:
+        dest: hello
+        content: 'world\n'
+    - command: date +%D
+  gather_facts: false
+  
+- name: install pip-autoremove
+  hosts: localhost
+  tasks:
+    - pip:
+        name: pip-autoremove
+  gather_facts: false
+
+- name: install nginx
+  hosts: all
+  tags: nginx
+  become: true
+  diff: true
+  tasks:
+  - name: install nginx
+    ansible.builtin.apt:
+      update_cache: true # run 'apt update'
+      name: nginx
+  - name: copy welcome page
+    ansible.builtin.copy:
+      src: ~/Lab/Ansible/gsa/nginx_test.html
+      dest: /var/www/html/index.html
+    check_mode: false
